@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0a0b0a">
+<meta name="color-scheme" content="dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Gaiola MKII">
+<meta name="format-detection" content="telephone=no">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="img/icon-192.png">
+<link rel="stylesheet" href="app.css">
+<title>Gaiola MKII — Ready to Roll</title>
+</head>
+<body>
+
+<!-- Ícones (sprite inline, funciona offline) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-sat" viewBox="0 0 24 24"><g transform="rotate(-45 12 12)" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="9" y="8" width="6" height="8" rx="1.2"/><rect x="1.5" y="9" width="5.5" height="6"/><rect x="17" y="9" width="5.5" height="6"/><path d="M12 8V5M12 16v3"/></g><path d="M16 20a6 6 0 0 0 4-4M15 22.5A9 9 0 0 0 22.5 15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-mountain" viewBox="0 0 24 24"><path d="M1.5 20.5l7-12.5 4.2 7.2 3-4.2 6.8 9.5z" fill="currentColor"/></symbol>
+    <symbol id="i-slope" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M2.5 19.5h19V8.5z"/><path d="M13.5 19.5a9 9 0 0 0-1.8-5"/></g></symbol>
+    <symbol id="i-thermo" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14.2V5a2 2 0 0 1 4 0v9.2a4 4 0 1 1-4 0z"/><path d="M12 9.5v7"/></g></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="5.5" r="2.5"/><path d="M8 18.5h5.5a3.5 3.5 0 0 0 0-7h-3a3.5 3.5 0 0 1 0-7H16"/></g></symbol>
+    <symbol id="i-timer" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 9v4.8l3 1.6M9.5 2.8h5M12 2.8v3.2M19 6l1.4-1.4"/></g></symbol>
+    <symbol id="i-gauge" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3.8 18a9.3 9.3 0 1 1 16.4 0"/><path d="M12 14.5l3.6-5"/><circle cx="12" cy="14.8" r="1.4"/><path d="M12 5.2v1.6M5.6 8.2l1.3 1M18.4 8.2l-1.3 1"/></g></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M12 21.5s7-6.2 7-11.8a7 7 0 0 0-14 0c0 5.6 7 11.8 7 11.8z"/><circle cx="12" cy="9.7" r="2.4"/></g></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="1.7"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></g></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5v12M7 10.8l5 5 5-5M4.5 20.5h15"/></g></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M2.5 6.5l6-2.2 7 2.2 6-2.2v13.2l-6 2.2-7-2.2-6 2.2zM8.5 4.3v13.2M15.5 6.5v13.2"/></g></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21.5V3.5M6 4.5h11.5l-2.5 4.2 2.5 4.2H6"/></g></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M10.3 2.8h3.4l.5 2.4 1.6.7 2.1-1.3 2.4 2.4-1.3 2.1.7 1.6 2.4.5v3.4l-2.4.5-.7 1.6 1.3 2.1-2.4 2.4-2.1-1.3-1.6.7-.5 2.4h-3.4l-.5-2.4-1.6-.7-2.1 1.3-2.4-2.4 1.3-2.1-.7-1.6-2.4-.5v-3.4l2.4-.5.7-1.6-1.3-2.1 2.4-2.4 2.1 1.3 1.6-.7z"/><circle cx="12" cy="12" r="3.2"/></g></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 12.5l9 5 9-5M3 17l9 5 9-5"/></g></symbol>
+    <symbol id="i-chip" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2.5v3.5M15 2.5v3.5M9 18v3.5M15 18v3.5M2.5 9H6M2.5 15H6M18 9h3.5M18 15h3.5"/></g></symbol>
+  </defs>
+</svg>
+
+<div id="app">
+
+  <header class="top">
+    <img class="logo" src="img/logo.png" alt="" width="74" height="34">
+    <div class="brand">
+      <div class="name">GAIOLA MKII</div>
+      <div class="tag">READY TO ROLL</div>
+    </div>
+    <button id="recBtn" class="rec on" type="button" aria-label="Pausar ou retomar gravação da trilha">
+      <i class="dot"></i><span id="recTxt">REC</span>
+    </button>
+  </header>
+
+  <main>
+
+    <!-- ======================= PAINEL ======================= -->
+    <section id="v-painel" class="view active">
+
+      <div class="rowA">
+        <div class="colSpeed">
+          <div class="tile gps" id="gpsTile">
+            <svg class="ic"><use href="#i-sat"/></svg>
+            <span id="gpsTxt" class="gpsTxt">GPS</span>
+            <span class="bars" id="gpsBars"><i></i><i></i><i></i><i></i></span>
+          </div>
+          <div class="tile speed">
+            <div class="lbl">VELOCIDADE</div>
+            <div class="spd" id="speed">—</div>
+            <div class="spdUnit">km/h</div>
+          </div>
+        </div>
+
+        <div class="tile compass" id="compassTile">
+          <svg id="compass" viewBox="0 0 200 200" aria-label="Bússola">
+            <circle cx="100" cy="100" r="96" class="cRing"/>
+            <g id="cTicks"></g>
+            <text class="cCard cN" id="cN" x="100" y="20">N</text>
+            <text class="cCard" id="cL" x="180" y="100">L</text>
+            <text class="cCard" id="cS" x="100" y="180">S</text>
+            <text class="cCard" id="cO" x="20" y="100">O</text>
+            <path class="cPtr" d="M100 30 L112 58 L100 52 L88 58 Z"/>
+            <text class="cDir" id="cDir" x="100" y="112">—</text>
+            <text class="cDeg" id="cDeg" x="100" y="146">—</text>
+          </svg>
+          <div class="cSrc" id="cSrc"></div>
+        </div>
+
+        <div class="colSide">
+          <div class="tile mini">
+            <svg class="ic g"><use href="#i-mountain"/></svg>
+            <div><div class="lbl r">ALTITUDE</div><div class="val"><span id="alt">—</span><small> m</small></div></div>
+          </div>
+          <div class="tile mini">
+            <svg class="ic b"><use href="#i-slope"/></svg>
+            <div><div class="lbl b">INCLINAÇÃO</div><div class="val b"><span id="pitch">—</span><small id="roll"></small></div></div>
+          </div>
+          <div class="tile mini dim">
+            <svg class="ic o"><use href="#i-thermo"/></svg>
+            <div><div class="lbl o">TEMP. EXT.</div><div class="val"><span>—</span><small> fase 3</small></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rowB">
+        <div class="tile st"><div class="lbl">TRILHA</div><div class="row"><svg class="ic g"><use href="#i-route"/></svg><div class="val"><span id="dist">0,00</span><small> km</small></div></div><div class="lbl s">DISTÂNCIA</div></div>
+        <div class="tile st"><div class="lbl">TEMPO</div><div class="row"><svg class="ic o"><use href="#i-timer"/></svg><div class="val"><span id="mov">00:00:00</span></div></div><div class="lbl s">MOVIMENTO</div></div>
+        <div class="tile st"><div class="lbl">VELOC. MÉDIA</div><div class="row"><svg class="ic o"><use href="#i-gauge"/></svg><div class="val"><span id="avg">0</span></div></div><div class="lbl s">km/h</div></div>
+        <div class="tile st"><div class="lbl">VELOC. MÁX.</div><div class="row"><svg class="ic r"><use href="#i-gauge"/></svg><div class="val"><span id="max">0</span></div></div><div class="lbl s">km/h</div></div>
+      </div>
+
+      <div class="tile mapTile">
+        <canvas id="mapMini"></canvas>
+        <button class="n" id="mmN" type="button" aria-label="Alternar norte para cima ou direção para cima"><span id="mmNtxt">N</span></button>
+        <div class="mapBtns">
+          <button type="button" id="mmGpx" class="wide" aria-label="Exportar GPX"><svg class="ic"><use href="#i-down"/></svg><span>GPX</span></button>
+          <button type="button" id="mmLayer" aria-label="Trocar camada do mapa"><svg class="ic"><use href="#i-layers"/></svg></button>
+          <button type="button" id="mmCenter" aria-label="Centralizar ou ver trilha inteira"><svg class="ic"><use href="#i-target"/></svg></button>
+          <button type="button" id="mmIn" aria-label="Aproximar">+</button>
+          <button type="button" id="mmOut" aria-label="Afastar">−</button>
+        </div>
+      </div>
+
+      <div class="rowD">
+        <div class="tile cd"><svg class="ic o"><use href="#i-route"/></svg><div><div class="lbl">COORDENADAS</div><div class="coords"><div id="lat">—</div><div id="lon">—</div></div></div></div>
+        <div class="tile cd"><svg class="ic g"><use href="#i-sat"/></svg><div><div class="lbl">PRECISÃO GPS</div><div class="val2"><span id="acc">—</span><small> m</small></div><div class="sub" id="fixAge">sem leitura</div></div></div>
+        <div class="tile cd dim"><svg class="ic o"><use href="#i-chip"/></svg><div><div class="lbl">SENSORES EXT.</div><div class="val2 sm">Fase 3</div><div class="sub">ESP32 / OBD</div></div></div>
+      </div>
+    </section>
+
+    <!-- ======================= TRILHA ======================= -->
+    <section id="v-trilha" class="view">
+      <div class="tile mapTile big">
+        <canvas id="mapBig"></canvas>
+        <button class="n" id="mbN" type="button" aria-label="Alternar norte para cima ou direção para cima"><span id="mbNtxt">N</span></button>
+        <div class="mapBtns">
+          <button type="button" id="mbLayer" aria-label="Trocar camada do mapa"><svg class="ic"><use href="#i-layers"/></svg></button>
+          <button type="button" id="mbCenter" aria-label="Seguir posição ou ver trilha inteira"><svg class="ic"><use href="#i-target"/></svg></button>
+          <button type="button" id="mbIn" aria-label="Aproximar">+</button>
+          <button type="button" id="mbOut" aria-label="Afastar">−</button>
+        </div>
+        <div class="mapMode" id="mbMode">SEGUINDO</div>
+      </div>
+
+      <div class="trkStats">
+        <div class="tile st2"><div class="lbl">TRILHA ATUAL</div><div class="row"><svg class="ic g"><use href="#i-route"/></svg><div class="val"><span id="t-dist">0,00</span><small> km</small></div></div></div>
+        <div class="tile st2"><div class="lbl">TEMPO</div><div class="row"><svg class="ic o"><use href="#i-timer"/></svg><div class="val"><span id="t-mov">00:00:00</span></div></div></div>
+        <div class="tile st2"><div class="lbl">ALTITUDE</div><div class="row"><svg class="ic g"><use href="#i-mountain"/></svg><div class="val"><span id="t-alt">—</span><small> m</small></div></div><div class="gain" id="t-gain">ganho +0 m</div></div>
+      </div>
+
+      <div class="tile elev"><canvas id="elevCv"></canvas></div>
+
+      <div class="actions">
+        <button type="button" class="btn" id="btnReset">NOVA</button>
+        <button type="button" class="btn" id="btnMapsMe"><svg class="ic"><use href="#i-pin"/></svg>MAPS.ME</button>
+        <button type="button" class="btn pri" id="btnGpx"><svg class="ic"><use href="#i-down"/></svg>EXPORTAR GPX</button>
+      </div>
+    </section>
+
+    <!-- ======================= CONFIG ======================= -->
+    <section id="v-config" class="view">
+      <div class="cfgScroll">
+
+        <h2>Tela</h2>
+        <div class="card">
+          <label class="row sw"><span>Manter a tela ligada<small id="wakeInfo">—</small></span><input type="checkbox" id="cfgWake"></label>
+        </div>
+
+        <h2>Inclinação</h2>
+        <div class="card">
+          <div class="row col">
+            <span>Posição do celular</span>
+            <div class="seg" id="cfgMount">
+              <button type="button" data-v="upright">Em pé, tela p/ o piloto</button>
+              <button type="button" data-v="flat">Deitado, topo p/ frente</button>
+            </div>
+          </div>
+          <label class="row sw"><span>Inverter frente/trás<small>Subida deve aparecer com sinal +</small></span><input type="checkbox" id="cfgInvPitch"></label>
+          <label class="row sw"><span>Inverter lateral<small>Lado direito baixo = D</small></span><input type="checkbox" id="cfgInvRoll"></label>
+          <div class="row">
+            <button type="button" class="btn pri" id="btnCal">CALIBRAR ZERO</button>
+            <button type="button" class="btn" id="btnCalClr">LIMPAR</button>
+          </div>
+          <p class="hint">Com a gaiola parada em piso plano e o celular já preso no suporte, toque em Calibrar zero. Trancos e freadas alteram a leitura por instantes.</p>
+        </div>
+
+        <h2>Mapa</h2>
+        <div class="card">
+          <div class="row col">
+            <span>Camada</span>
+            <div class="seg four" id="cfgLayer">
+              <button type="button" data-v="sat">Satélite</button>
+              <button type="button" data-v="osm">Ruas</button>
+              <button type="button" data-v="topo">Relevo</button>
+              <button type="button" data-v="none">Nenhum</button>
+            </div>
+          </div>
+          <p class="hint">O mapa precisa de internet para baixar cada pedaço. O que você já viu fica guardado no aparelho e reabre sem sinal. Sem sinal e sem cache, o painel segue funcionando com o traçado sobre a grade.</p>
+        </div>
+
+        <h2>Trilha</h2>
+        <div class="card">
+          <div class="row">
+            <button type="button" class="btn" id="btnReset2">ZERAR TRILHA</button>
+            <button type="button" class="btn pri" id="btnGpx2">EXPORTAR GPX</button>
+          </div>
+        </div>
+
+        <h2>Teste sem sair de casa</h2>
+        <div class="card">
+          <label class="row sw"><span>Modo demonstração<small>Simula GPS, bússola e inclinação</small></span><input type="checkbox" id="cfgDemo"></label>
+        </div>
+
+        <h2>Diagnóstico</h2>
+        <div class="card diag" id="diag"></div>
+
+        <p class="foot">Gaiola MKII · Fase 1 · v0.3<br>Instrumentos básicos funcionam sem internet.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <nav class="tabs" aria-label="Seções">
+    <button type="button" data-tab="painel" class="active"><svg class="ic"><use href="#i-gauge"/></svg><span>PAINEL</span></button>
+    <button type="button" data-tab="mapa" class="soon"><svg class="ic"><use href="#i-map"/></svg><span>MAPA</span><em>FASE 2</em></button>
+    <button type="button" data-tab="trilha"><svg class="ic"><use href="#i-route"/></svg><span>TRILHA</span></button>
+    <button type="button" data-tab="pontos" class="soon"><svg class="ic"><use href="#i-pin"/></svg><span>PONTOS</span><em>FASE 2</em></button>
+    <button type="button" data-tab="config"><svg class="ic"><use href="#i-gear"/></svg><span>CONFIG</span></button>
+  </nav>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Tela de entrada: o iOS exige um toque para liberar GPS e sensores -->
+  <div id="splash">
+    <div class="splashCard">
+      <img src="img/logo.png" alt="" width="120" height="55">
+      <div class="sName">GAIOLA MKII</div>
+      <div class="sTag">READY TO ROLL</div>
+      <div id="splashSaved" class="saved" hidden></div>
+      <button type="button" class="btn pri big" id="btnStart">INICIAR PAINEL</button>
+      <button type="button" class="btn big" id="btnStartNew" hidden>NOVA TRILHA</button>
+      <p class="hint" id="splashHint">Vai pedir acesso à localização e a movimento e orientação. Toque em Permitir nos dois.</p>
+      <p class="warn" id="splashWarn" hidden></p>
+    </div>
+  </div>
+
+</div>
+<script src="app.js"></script>
+</body>
+</html>
